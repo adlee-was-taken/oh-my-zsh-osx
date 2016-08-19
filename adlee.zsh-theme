@@ -1,7 +1,6 @@
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # % ~/.oh-my-zsh/themes/adlee.zsh-theme
 # === ADLee's zsh (oh-my-zsh) Theme ===
-# === 2016-07-19 - Pindrop Security ===
 # =====================================
 
 # === Compact Prompt Mode ===
