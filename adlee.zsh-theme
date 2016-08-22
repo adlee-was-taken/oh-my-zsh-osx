@@ -15,12 +15,11 @@ fi
 # ==== RP_[...] = Right Prompt
 # ==== P_[...] = Both Prompts
 #
-ZTM_ADLEE_P_START='%{$FG[239]%}Ҩ%{$reset_color%}'
-ZTM_ADLEE_UP_START='%{$FG[239]%}Ҩ%{$reset_color%}'
+ZTM_ADLEE_P_START='%{$FG[239]%}§%{$reset_color%}'
+ZTM_ADLEE_UP_START='%{$FG[239]%}§%{$reset_color%}'
 ZTM_ADLEE_RP_START='%{$FG[239]%}%{$reset_color%}'
-ZTM_ADLEE_RP_END='%{$FG[239]%}Ҩ%{$reset_color%}'
-ZTM_ADLEE_LP_DIV='%{$FG[239]%}•Ҩ•%{$reset_color%}'
-ZTM_ADLEE_P_DIV='%{$FG[239]%}•%{$reset_color%}'
+ZTM_ADLEE_RP_END='%{$FG[239]%}§%{$reset_color%}'
+ZTM_ADLEE_P_DIV='%{$FG[239]%} %{$reset_color%}'
 ZTM_ADLEE_TXT_GRY='%{$FG[239]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color%}'
 
@@ -55,7 +54,7 @@ export ZTM_ADLEE_P_CURDIR='%{$FX[bold]$FG[179]%}%~%{$reset_color%}$(git_prompt_i
 # ==== P_CMDNUM = Current command 'history' number
 export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[239]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color%}'
 # ==== P_PCHAR = Prompt character (%/#)
-export ZTM_ADLEE_P_PCHAR='%{$FG[239]%}•Ҩ%{$reset_color%} %{$FG[239]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
+export ZTM_ADLEE_P_PCHAR='%{$FG[239]%} +%{$reset_color%} %{$FG[239]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
 # ==== P_FREE = Amount of available RAM (in MB)
 local run_free;run_free=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
 export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$run_free$FG[239]%}MB%{$reset_color%}'
@@ -68,16 +67,15 @@ local txt_reset;txt_reset='%{$reset_color%}'
 # === Assemble Prompt Components ===
 # ==================================
 # ==== [LU]Left-Upper : [ user@hostname ] - [ √/X (Internet Connected) ] - [ PWD ]
-export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'[ '$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
-$ZTM_ADLEE_P_HOST' ]'$ZTM_ADLEE_P_DIV'[ '$ZTM_ADLEE_P_CONN' ]'$ZTM_ADLEE_P_DIV'[ '$ZTM_ADLEE_P_CURDIR' ]'\
-$ZTM_ADLEE_P_DIV
+export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
+$ZTM_ADLEE_P_HOST']'$ZTM_ADLEE_P_DIV'['$txt_grey'Conn:'$txt_reset''$ZTM_ADLEE_P_CONN']'$ZTM_ADLEE_P_DIV\
+'['$ZTM_ADLEE_P_CURDIR'] '
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
-export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_RP_START'[ '$ZTM_ADLEE_P_FREE' ]'\
-$ZTM_ADLEE_P_DIV'[ '$ZTM_ADLEE_P_BATT' ]'$ZTM_ADLEE_P_DIV'[ '$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD' ]'\
-$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_RP_END
+export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'['$ZTM_ADLEE_P_FREE']'$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_BATT']'\
+$ZTM_ADLEE_P_DIV'['$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD']'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_RP_END
 # ==== [L]Lower : Date & Time - Current Command History #
-export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_DATE''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_TIME''\
-$ZTM_ADLEE_LP_DIV''$ZTM_ADLEE_P_CMDNUM''$ZTM_ADLEE_P_PCHAR
+export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_DATE''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_TIME']'\
+$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CMDNUM']'$ZTM_ADLEE_P_PCHAR
 # ==== [SM]Small (Compact) : User - Current Command History # 
 export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CMDNUM''$ZTM_ADLEE_P_PCHAR
 
@@ -100,7 +98,7 @@ local papp6;papp6=$(whoami | tr -d " \t\n\r" | wc -m)
 local papp7;papp7=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}'| tr -d " \t\n\r" | wc -m)
 
 #Account for other (design) characters
-local desch;desch=42
+local desch;desch=34
 
 #Set $prompt_comp to global $PROMPT_COMPACT
 local prompt_comp;prompt_comp=$PROMPT_COMPACT
@@ -108,7 +106,7 @@ local prompt_comp;prompt_comp=$PROMPT_COMPACT
 #Figure out how many 'fill' chars we need.
 local i_filler;i_filler=$(( $COLUMNS - $desch - $papp1 - $papp2 - $papp3 - $papp4 - $papp5 - $papp6 - $papp7 ))
 #Export 'P_FILL' variable with proper number of filler chars.
-local p_fill;p_fill="%{$FG[239]%}${(l:${i_filler}::°º°˚:)}${reset_color}"
+local p_fill;p_fill="%{$FG[239]%}${(l:${i_filler}::+ # :)}${reset_color}"
 
 
 # === Check Console Width and Adjust Prompt Accordingly ===
