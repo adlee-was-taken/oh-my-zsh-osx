@@ -16,10 +16,11 @@ fi
 # ==== P_[...] = Both Prompts
 #
 ZTM_ADLEE_P_START='%{$FG[239]%}╭%{$reset_color%}'
-ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}✪─%{$reset_color%}'
+ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}□─%{$reset_color%}'
 ZTM_ADLEE_UP_START='%{$FG[239]%}╰%{$reset_color%}'
 ZTM_ADLEE_RP_START='%{$FG[239]%}─%{$reset_color%}'
-ZTM_ADLEE_RP_END='%{$FG[239]%}▷○%{$reset_color%}'
+ZTM_ADLEE_RP_END='%{$FG[239]%}─▷□%{$reset_color%}'
+ZTM_ADLEE_LP_END='%{$FG[239]%}─▷○%{$reset_color%}'
 ZTM_ADLEE_P_DIV='%{$FG[239]%}─%{$reset_color%}'
 ZTM_ADLEE_TXT_GRY='%{$FG[239]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color%}'
@@ -35,9 +36,9 @@ precmd() {
 # ==== P_USER = Current System User
 # ==== P_ATSIGN = '@' -- for between USER'@'HOST
 # ==== P_HOST = System Hostname
-export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[136]%}%n%{$reset_color%}'
-export ZTM_ADLEE_P_ATSIGN='%{$FX[bold]$FG[136]%}@%{$reset_color%}'
-export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[136]%}%m%{$reset_color%}'
+export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[196]%}%n%{$reset_color%}'
+export ZTM_ADLEE_P_ATSIGN='%{$FX[bold]$FG[196]%}@%{$reset_color%}'
+export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[196]%}%m%{$reset_color%}'
 # ==== P_TIME = Current time (24hr)
 # ==== P_STIME = Current time (without seconds)
 # ==== P_DATE = Current date: YYYY-MM-DD
@@ -57,7 +58,7 @@ export ZTM_ADLEE_P_CURGIT='$(git_prompt_info)'
 # ==== P_CMDNUM = Current command 'history' number
 export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[239]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color%}'
 # ==== P_PCHAR = Prompt character (%/#)
-export ZTM_ADLEE_P_PCHAR='%{$FG[239]%}─▷○ %{$reset_color%}%{$FG[239]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
+export ZTM_ADLEE_P_PCHAR='%{$FG[239]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
 # ==== P_FREE = Amount of available RAM (in MB)
 local run_free;run_free=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
 export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$run_free$FG[239]%}MB%{$reset_color%}'
@@ -75,12 +76,13 @@ $ZTM_ADLEE_P_HOST']'$ZTM_ADLEE_P_DIV'['$txt_grey'⌁www⌁:'$txt_reset''$ZTM_ADL
 '['$ZTM_ADLEE_P_CURDIR']'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CURGIT
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
 export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'['$ZTM_ADLEE_P_FREE']'$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_BATT']'\
-$ZTM_ADLEE_P_DIV'['$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD']'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_RP_END
+$ZTM_ADLEE_P_DIV'['$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD']'$ZTM_ADLEE_RP_END
 # ==== [L]Lower : Date & Time - Current Command History #
 export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_DATE''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_TIME']'\
-$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CMDNUM']'$ZTM_ADLEE_P_PCHAR
+$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CMDNUM']'$ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
 # ==== [SM]Small (Compact) : User - Current Command History # 
-export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'['$ZTM_ADLEE_P_USER']'$ZTM_ADLEE_P_PCHAR
+export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'['$ZTM_ADLEE_P_USER']'$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CURDIR']'\
+$ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
 
 # === Calculate and Create Filler for Full-Width Prompt (top-line) ===
 # ====================================================================
@@ -102,7 +104,7 @@ local mem_width;mem_width=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{pr
 
 #Account for other (design) characters
 local desch;desch=37
-local ldesch;ldesch=21
+local ldesch;ldesch=22
 
 #Set $prompt_comp to global $PROMPT_COMPACT
 local prompt_comp;prompt_comp=$PROMPT_COMPACT
