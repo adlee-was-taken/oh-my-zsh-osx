@@ -5,9 +5,10 @@
 
 # === Compact Prompt Mode ===
 # ===========================
-#PROMPT_COMPACT="enabled"
+# ==== To enable: export PROMPT_COMPACT=true
+#PROMPT_COMPACT=false
 if [[ "$PROMPT_COMPACT" == "" ]];then
-PROMPT_COMPACT='disabled'
+PROMPT_COMPACT=false
 fi
 # === Prompt Design Elements ===
 # ==============================
@@ -80,7 +81,7 @@ $ZTM_ADLEE_P_DIV'['$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD']'$ZTM_ADLEE_RP
 # ==== [L]Lower : Date & Time - Current Command History #
 export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_DATE''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_TIME']'\
 $ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CMDNUM']'$ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
-# ==== [SM]Small (Compact) : User - Current Command History # 
+# ==== [SM]Small (Compact) : User - PWD 
 export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'['$ZTM_ADLEE_P_USER']'$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CURDIR']'\
 $ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
 
@@ -125,7 +126,7 @@ if [[ $i_filler -ge 0 ]]; then
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 #If there is not enough room for even the top-left part of prompt, switch to compact mode.
 elif [[ $COLUMNS -lt $(( $host_width + $pwd_width + $git_width + $user_width + ( $desch / 2 ) )) ]]; then
-  prompt_comp="enabled"
+  prompt_comp=true
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 #Otherwise just show upper-left and lower-left prompts.
 else
@@ -134,7 +135,7 @@ else
 fi
 
 #If the $PROMPT_COMPACT is 'enabled' display the small prompt: single line w/ less info.
-if [[ "$prompt_comp" !=  "enabled" ]];then
+if ! $prompt_comp ;then
   print -rP "${ZTM_ADLEE_U_PMPT}"
   export PROMPT=$ZTM_ADLEE_M_PMPT
 else
