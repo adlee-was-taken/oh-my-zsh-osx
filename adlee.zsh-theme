@@ -16,6 +16,7 @@ fi
 # ==== P_[...] = Both Prompts
 #
 ZTM_ADLEE_P_START='%{$FG[239]%}╭%{$reset_color%}'
+ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}✪─%{$reset_color%}'
 ZTM_ADLEE_UP_START='%{$FG[239]%}╰%{$reset_color%}'
 ZTM_ADLEE_RP_START='%{$FG[239]%}─%{$reset_color%}'
 ZTM_ADLEE_RP_END='%{$FG[239]%}▷○%{$reset_color%}'
@@ -79,7 +80,7 @@ $ZTM_ADLEE_P_DIV'['$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD']'$ZTM_ADLEE_P_
 export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_DATE''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_TIME']'\
 $ZTM_ADLEE_P_DIV'['$ZTM_ADLEE_P_CMDNUM']'$ZTM_ADLEE_P_PCHAR
 # ==== [SM]Small (Compact) : User - Current Command History # 
-export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CMDNUM''$ZTM_ADLEE_P_PCHAR
+export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'['$ZTM_ADLEE_P_USER']'$ZTM_ADLEE_P_PCHAR
 
 # === Calculate and Create Filler for Full-Width Prompt (top-line) ===
 # ====================================================================
