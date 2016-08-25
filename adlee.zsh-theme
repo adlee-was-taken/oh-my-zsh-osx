@@ -17,11 +17,11 @@ fi
 # ==== P_[...] = Both Prompts
 #
 ZTM_ADLEE_P_START='%{$FG[239]%}╭%{$reset_color%}'
-ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}□─%{$reset_color%}'
+ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}◪─%{$reset_color%}'
 ZTM_ADLEE_UP_START='%{$FG[239]%}╰%{$reset_color%}'
 ZTM_ADLEE_RP_START='%{$FG[239]%}─%{$reset_color%}'
-ZTM_ADLEE_RP_END='%{$FG[239]%}─▷□%{$reset_color%}'
-ZTM_ADLEE_LP_END='%{$FG[239]%}─▷○%{$reset_color%}'
+ZTM_ADLEE_RP_END='%{$FG[239]%}─◩%{$reset_color%}'
+ZTM_ADLEE_LP_END='%{$FG[239]%}─▶◎%{$reset_color%}'
 ZTM_ADLEE_P_DIV='%{$FG[239]%}─%{$reset_color%}'
 ZTM_ADLEE_TXT_GRY='%{$FG[239]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color%}'
@@ -104,7 +104,7 @@ local user_width;user_width=$(whoami | tr -d " \t\n\r" | wc -m)
 local mem_width;mem_width=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}'| tr -d " \t\n\r" | wc -m)
 
 #Account for other (design) characters
-local desch;desch=37
+local desch;desch=36
 local ldesch;ldesch=22
 
 #Set $prompt_comp to global $PROMPT_COMPACT
