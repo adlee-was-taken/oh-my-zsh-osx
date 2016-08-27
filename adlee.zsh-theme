@@ -16,14 +16,14 @@ fi
 # ==== RP_[...] = Right Prompt
 # ==== P_[...] = Both Prompts
 #
-ZTM_ADLEE_P_START='%{$FG[239]%}╭%{$reset_color$FG[239]%}'
-ZTM_ADLEE_P_COMPACT_START='%{$FG[239]%}◪─%{$reset_color$FG[239]%}'
-ZTM_ADLEE_UP_START='%{$FG[239]%}╰%{$reset_color$FG[239]%}'
-ZTM_ADLEE_RP_START='%{$FG[239]%}─%{$reset_color$FG[239]%}'
-ZTM_ADLEE_RP_END='%{$FG[239]%}─◩%{$reset_color$FG[239]%}'
-ZTM_ADLEE_LP_END='%{$FG[239]%}─▷☉%{$reset_color$FG[239]%}'
-ZTM_ADLEE_P_DIV='%{$FG[239]%}─%{$reset_color$FG[239]%}'
-ZTM_ADLEE_TXT_GRY='%{$FG[239]%}'
+ZTM_ADLEE_P_START='%{$FG[245]%}◑┬%{$reset_color$FG[245]%}'
+ZTM_ADLEE_P_COMPACT_START='%{$FG[245]%}◑─%{$reset_color$FG[245]%}'
+ZTM_ADLEE_UP_START='%{$FG[245]%} ╰%{$reset_color$FG[245]%}'
+ZTM_ADLEE_RP_START='%{$FG[245]%}─%{$reset_color$FG[245]%}'
+ZTM_ADLEE_RP_END='%{$FG[245]%}──◐%{$reset_color$FG[245]%}'
+ZTM_ADLEE_LP_END='%{$FG[245]%}─▷☉%{$reset_color$FG[245]%}'
+ZTM_ADLEE_P_DIV='%{$FG[245]%}─%{$reset_color$FG[245]%}'
+ZTM_ADLEE_TXT_GRY='%{$FG[245]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color%}'
 
 # === PreCMD Function ===
@@ -33,7 +33,7 @@ ZTM_ADLEE_TXT_RST='%{$reset_color%}'
 precmd() {
 
 # ==== Text formatting local vars.
-local txt_grey;txt_grey='%{$FG[239]%}'
+local txt_grey;txt_grey='%{$FG[245]%}'
 local txt_reset;txt_reset='%{$reset_color%}'
 
 # === Prompt Utility Elements ===
@@ -41,40 +41,40 @@ local txt_reset;txt_reset='%{$reset_color%}'
 # ==== P_USER = Current System User
 # ==== P_ATSIGN = '@' -- for between USER'@'HOST
 # ==== P_HOST = System Hostname
-export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[196]%}%n%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_ATSIGN='%{$FX[bold]$FG[196]%}@%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[196]%}%m%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[196]%}%n%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_ATSIGN='%{$FX[bold]$FG[196]%}@%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[196]%}%m%{$reset_color$FG[245]%}'
 # ==== P_TIME = Current time (24hr)
 # ==== P_STIME = Current time (without seconds)
 # ==== P_DATE = Current date: YYYY-MM-DD
 # ==== P_SDATE = Current date: YY/MM/DD
-export ZTM_ADLEE_P_TIME='%{$FG[069]%}%D{%I:%M:%S}%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_STIME='%{$FG[069]%}%D{%I:%M}%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_DATE='%{$FG[069]%}%D{%Y-%m-%d}%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_SDATE='%{$FG[069]%}%D{%y/%m/%d}%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_TIME='%{$FG[069]%}%D{%I:%M:%S}%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_STIME='%{$FG[069]%}%D{%I:%M}%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_DATE='%{$FG[069]%}%D{%Y-%m-%d}%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_SDATE='%{$FG[069]%}%D{%y/%m/%d}%{$reset_color$FG[245]%}'
 # ==== P_BATT = Runs script that returns battery charge %
-export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_color$FG[245]%}'
 # ==== P_IPADD = Current 'en0' IP address
-export ZTM_ADLEE_P_IPADD='%{$FX[bold]$FG[136]%}$(~/.zsh/ipaddr.sh)%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_IPADD='%{$FX[bold]$FG[136]%}$(~/.zsh/ipaddr.sh)%{$reset_color$FG[245]%}'
 # ==== P_CURDIR = Working DIR
-export ZTM_ADLEE_P_CURDIR='%{$FX[bold]$FG[179]%}%~%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_CURDIR='%{$FX[bold]$FG[179]%}%~%{$reset_color$FG[245]%}'
 # ==== P_CURGIT = Working DIR's Git Info
-export ZTM_ADLEE_P_CURGIT='%{$(git_prompt_info)$FG[239]%}'
+export ZTM_ADLEE_P_CURGIT='%{$(git_prompt_info)$FG[245]%}'
 # ==== P_CMDNUM = Current command 'history' number
-export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[239]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[245]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color$FG[245]%}'
 # ==== P_PCHAR = Prompt character (%/#)
-export ZTM_ADLEE_P_PCHAR='%{$FG[239]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
+export ZTM_ADLEE_P_PCHAR='%{$FG[245]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
 # ==== P_FREE = Amount of available RAM (in MB)
 local run_free;run_free=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
-export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$run_free$FG[239]%}MB%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$run_free$FG[245]%}MB%{$reset_color$FG[245]%}'
 # ==== P_CONN = Run python script that checks internet connectivity and returns √ or X
-export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[239]%}'
+export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[245]%}'
 
 # === Assemble Prompt Components ===
 # ==================================
 # ==== [LU]Left-Upper : [ user@hostname ] - [ √/X (Internet Connected) ] - [ PWD ]
 export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
-$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$txt_grey'⌁www⌁:'$txt_reset''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
+$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$txt_grey'⇜www⇝:'$txt_reset''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
 '⟨'$ZTM_ADLEE_P_CURDIR'⟩'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CURGIT
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
 export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'⟨'$ZTM_ADLEE_P_FREE'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_BATT'⟩'\
@@ -94,7 +94,10 @@ local host_width;host_width=$(hostname | cut  -d '.' -f1 | tr -d " \t\n\r" | wc 
 # ==== Get width of PWD (UL Box3)
 local pwd_width;pwd_width=$(pwd | sed -e 's/\/Users\/alee/~/g' | wc -m)
 # ==== Get width of Git tag (UL Box3)
-local git_width;git_width=$(git_prompt_info |  tr -d '%{}'| sed -e 's/[\x01-\x1F\x7F]//g' | col -bx | wc -m)
+local git_width;git_width=$(git_prompt_info |  tr -d '%{}'| sed -e 's/[\x01-\x1F\x7F]//g' | col -bx | wc -m) 
+if [ $git_width -gt 0 ];then  
+  git_width=$(( $git_width - 1 ))  # === For some reason width is off by 1, thus this.
+fi
 # ==== Get width of battery charge % (UR Box2)
 local batt_width;batt_width=$(~/.zsh/battery.sh | tr -d " \t\n\r" | wc -m)
 # ==== Get width of en0's IP address (UR Box3)
@@ -105,25 +108,25 @@ local user_width;user_width=$(whoami | tr -d " \t\n\r" | wc -m)
 local mem_width;mem_width=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}'| tr -d " \t\n\r" | wc -m)
 
 #Account for other (design) characters
-local desch;desch=36
-local ldesch;ldesch=22
+local desch;desch=42
+local ldesch;ldesch=23
 
 #Set $prompt_comp to global $PROMPT_COMPACT
 local prompt_comp;prompt_comp=$PROMPT_COMPACT
 
 #Figure out how many 'fill' chars we need.
-local i_filler;i_filler=$(( $COLUMNS-$desch-$host_width-$pwd_width-$git_width-$batt_width-$ip_width-$user_width-$mem_width ))
+local i_filler;i_filler=$(((( $COLUMNS-$desch-$host_width-$pwd_width-$git_width-$batt_width-$ip_width-$user_width-$mem_width ) / 2 ) - 2 ))
 local j_filler;j_filler=$(( $COLUMNS-$ldesch-$host_width-$pwd_width-$git_width-$user_width ))
 #Export 'P_FILL' variable with proper number of filler chars.
-local p_fill;p_fill="%{$FG[239]%}${(l:${i_filler}::─:)}${reset_color}"
-local p_left_fill;p_left_fill="%{$FG[239]%}${(l:${j_filler}::─:)}${reset_color}"
+local p_fill;p_fill="%{$FG[245]%}${(l:${i_filler}::─:)}${reset_color}"
+local p_left_fill;p_left_fill="%{$FG[245]%}${(l:${j_filler}::─:)}${reset_color}"
 
 # === Check Console Width and Adjust Prompt Accordingly ===
 # =========================================================
 
 #If there is enough room (width) display complete (full-info) prompt.
 if [[ $i_filler -ge 0 ]]; then
-  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT''$p_fill''$ZTM_ADLEE_RU_PMPT
+  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT''$p_fill''$ZTM_ADLEE_RP_END' ⚡ '$ZTM_ADLEE_P_COMPACT_START''$p_fill''$ZTM_ADLEE_RU_PMPT
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 #If there is not enough room for even the top-left part of prompt, switch to compact mode.
 elif [[ $COLUMNS -lt $(( $host_width + $pwd_width + $git_width + $user_width + ( $desch / 2 ) )) ]]; then
@@ -156,8 +159,8 @@ TRAPALRM() {
 
 # === Git Prompt Formatting ===
 # =============================
-ZSH_THEME_GIT_PROMPT_PREFIX="[%{$fg_bold[green]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}]"
+ZSH_THEME_GIT_PROMPT_PREFIX="⟨%{$fg_bold[green]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color$FG[245]%}⟩"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
