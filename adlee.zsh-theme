@@ -108,14 +108,14 @@ local user_width;user_width=$(whoami | tr -d " \t\n\r" | wc -m)
 local mem_width;mem_width=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}'| tr -d " \t\n\r" | wc -m)
 
 #Account for other (design) characters
-local desch;desch=42
+local desch;desch=38
 local ldesch;ldesch=23
 
 #Set $prompt_comp to global $PROMPT_COMPACT
 local prompt_comp;prompt_comp=$PROMPT_COMPACT
 
 #Figure out how many 'fill' chars we need.
-local i_filler;i_filler=$(((( $COLUMNS-$desch-$host_width-$pwd_width-$git_width-$batt_width-$ip_width-$user_width-$mem_width ) / 2 ) - 2 ))
+local i_filler;i_filler=$(( $COLUMNS-$desch-$host_width-$pwd_width-$git_width-$batt_width-$ip_width-$user_width-$mem_width ))
 local j_filler;j_filler=$(( $COLUMNS-$ldesch-$host_width-$pwd_width-$git_width-$user_width ))
 #Export 'P_FILL' variable with proper number of filler chars.
 local p_fill;p_fill="%{$FG[245]%}${(l:${i_filler}::─:)}${reset_color}"
@@ -126,7 +126,7 @@ local p_left_fill;p_left_fill="%{$FG[245]%}${(l:${j_filler}::─:)}${reset_color
 
 #If there is enough room (width) display complete (full-info) prompt.
 if [[ $i_filler -ge 0 ]]; then
-  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT''$p_fill''$ZTM_ADLEE_RP_END' ⚡ '$ZTM_ADLEE_P_COMPACT_START''$p_fill''$ZTM_ADLEE_RU_PMPT
+  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT''$p_fill''$ZTM_ADLEE_RU_PMPT
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 #If there is not enough room for even the top-left part of prompt, switch to compact mode.
 elif [[ $COLUMNS -lt $(( $host_width + $pwd_width + $git_width + $user_width + ( $desch / 2 ) )) ]]; then
