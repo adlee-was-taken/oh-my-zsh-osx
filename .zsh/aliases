@@ -1,6 +1,6 @@
 # 
 # Universal Shell Aliases, should.work with both Bash and ZSH.
-#   -- Aaron D. Lee -- 2016-07-22 -- Pindrop Security --
+#   -- Aaron D. Lee -- 2016-07-22
 #
 alias mkd.r='mkdir -p'
 alias chown='chown -Rv'
@@ -96,24 +96,4 @@ alias d.wait='docker wait'
 #
 git.updateMaster() {
 git add ./* && git commit -m "$@" && git push -u origin master
-}
-
-#
-## Docker Image alias functions.
-#
-
-d.runPitch() {
-docker run -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:20160818 /bin/bash -c "/usr/local/bin/pfg.start  && while true; do sleep 1200; done"
-}
-d.runPitch-cli() {
-docker run -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:20160818 /usr/bin/zsh
-}
-d.runCatch() {
-docker run -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:20160810 /bin/bash -c "service asterisk start && while true; do sleep 1200; done"
-}
-d.runCatch-cli() {
-docker run -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:20160810 /bin/zsh
-}
-d.runPcap-cli() {
-docker run -h pcap --net host -p 2022:22 -t -i pcap-test:20160810 /bin/zsh
 }
