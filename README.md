@@ -13,4 +13,5 @@
     +  `% cp -rf ./.zsh ~`
   3. Backup current `.zshrc` file, then copy included one to `~`
     +  `% cp ~/.zshrc ~/.zshrc_backup && cp ./.zshrc ~`
-  4. Reload zshrc: `% source ~/.zshrc`
+  4. Reload zshrc: 
+    +  `% source ~/.zshrc`
