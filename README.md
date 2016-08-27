@@ -12,7 +12,7 @@
   2. Copy `.zsh` directory (and all files within) to `~`
     +  `% cp -rf ./.zsh ~`
   3. Backup current `.zshrc` file, then copy included one to `~`
-    +  `% cp ~/.zshrc ~/.zshrc_backup && cp ./.zshrc ~`
+    +  `% cp ~/.zshrc ~/.zshrc_backup && cp ./zshrc ~/.zshrc`
     +  Import any customizations you want from your `.zshrc_backup` to the new `.zshrc` file.
   4. Reload zshrc: 
     +  `% source ~/.zshrc`
