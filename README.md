@@ -1,7 +1,7 @@
 ## My oh-my-zsh theme 'adlee' for OS X (Linux version coming soon).
 ### Best when used with:
   + 'Meslo LG M DZ Regular for Powerline' font: 
-    +  https://github.com/powerline/fonts/blob/master/Meslo/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.otf
+    + https://github.com/powerline/fonts/tree/master/Meslo
   + To work properly use `bindkey -v` in `.zshrc`
   + Enable vi-mode oh-my-zsh plugin 
   + Setup zsh aliases in `~/.zsh/aliases`
