@@ -63,7 +63,7 @@ export LANG=en_US.UTF-8
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git )
+plugins=( git docker tmux vi-mode )
 
 # User configuration
 
@@ -71,14 +71,9 @@ plugins=( git )
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-source ~/.zsh/completions
-plugins+=(zsh-completions)
-source ~/.oh-my-zsh/plugins/vi-mode/vi-mode.plugin.zsh
-plugins+=(vi-mode)
 autoload -U compinit && compinit
 source ~/.zsh/aliases
 
-source ~/.oh-my-zsh/plugins/tmux/tmux.plugin.zsh
 
 
 #TRAPALRM() {
@@ -125,19 +120,6 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
-#function zle-line-init zle-keymap-select {
-#    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-#    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-#    zle reset-prompt
-#}
-
-#function zle-line-init zle-keymap-select {
-#    VIM_NORMAL_PROMPT="◑─⟨%{$FX[bold]$FG[255]%}COMMAND%{$reset_color%}⟩─╯"
-#    VIM_INSERT_PROMPT="%{$FG[245]%}◑─⟨INSERT⟩─╯%{$reset_color%}"
-#    RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT}"
-#    RPS2=$RPS1
-#    zle reset-prompt
-#}
 
 #zle -N zle-line-init
 #zle -N zle-keymap-select
@@ -153,4 +135,5 @@ bindkey "^[[B" history-search-forward
 bindkey "^[[34;3@" up-case-word
 bindkey "^[[35;4@" undo
 bindkey "^[[35;5@" redo
-
+bindkey "^[[33;2&" backward-kill-word
+bindkey -M vicmd '^[[2~' edit-command-line

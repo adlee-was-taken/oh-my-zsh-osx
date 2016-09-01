@@ -26,21 +26,41 @@ ZTM_ADLEE_P_DIV='%{$FG[245]%}─%{$reset_color$FG[245]%}'
 ZTM_ADLEE_TXT_GRY='%{$FG[245]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color%}'
 
+# === VIM Prompt Formatting ===
+# =============================
+function vim_prompt () {
+if ! $PROMPT_COMPACT;then
+	VIM_NORMAL_PROMPT="%{$FG[245]%}◑─⟨⋅⋅%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[245]%}⋅⋅⟩─╯"
+    VIM_INSERT_PROMPT="%{$FG[245]%}◑─⟨⋅⋅%{$reset_color%}%{$FG[154]$FX[bold]%}«⎕»%{$reset_color%}%{$FG[245]%}⋅⋅⟩─╯%{$reset_color%}"
+else
+    VIM_NORMAL_PROMPT="%{$FG[245]%}⟨%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[245]%}⟩"
+    VIM_INSERT_PROMPT="%{$FG[245]%}⟨%{$reset_color%}%{$FG[154]$FX[bold]%}«⎕»%{$reset_color%}%{$FG[245]%}⟩%{$reset_color%}"
+fi
+RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT}"
+RPS2=$RPS1
+}
+
+vim_prompt
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
 
 # === Load oh-my-zsh Plugins ===
 # ==============================
 #
 plugins=(vi-mode)
 
-# === PreCMD Function ===
-# =======================
-# ==== This func runs before prompt is redrawn.
-#
-precmd() {
-
 # ==== Text formatting local vars.
-local txt_grey;txt_grey='%{$FG[245]%}'
-local txt_reset;txt_reset='%{$reset_color%}'
+export ZTM_ADLEE_P_TXT_GREY='%{$FG[245]%}'
+export ZTM_ADLEE_P_TXT_RESET='%{$reset_color%}'
+
+
+# === ZTM_ADLEE_BuildPrompt Function ===
+# =======================
+# ==== This func assembles the empire.
+#
+ZTM_ADLEE_BuildPrompt() {
 
 # === Prompt Utility Elements ===
 # ===============================
@@ -57,7 +77,7 @@ export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[196]%}%m%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_TIME='%{$FG[069]%}%D{%I:%M:%S}%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_STIME='%{$FG[069]%}%D{%I:%M}%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_DATE='%{$FG[069]%}%D{%Y-%m-%d}%{$reset_color$FG[245]%}'
-export ZTM_ADLEE_P_SDATE='%{$FG[069]%}%D{%b}%{$reset_color$FG[245]%}⋅%{$FG[069]%}%D{%d}'
+export ZTM_ADLEE_P_SDATE='%{$FG[069]%}%D{%b}⋅%D{%d}'
 # ==== P_BATT = Runs script that returns battery charge %
 export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_color$FG[245]%}'
 # ==== P_IPADD = Current 'en0' IP address
@@ -71,8 +91,8 @@ export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[245]%}!%{$reset_color%}%{$FX[bold]$FG[
 # ==== P_PCHAR = Prompt character (%/#)
 export ZTM_ADLEE_P_PCHAR='%{$FG[245]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
 # ==== P_FREE = Amount of available RAM (in MB)
-local run_free;run_free=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
-export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$run_free$FG[245]%}MB%{$reset_color$FG[245]%}'
+export ZTM_ADLEE_P_RUNFREE=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
+export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$ZTM_ADLEE_P_RUNFREE$FG[245]%}MB%{$reset_color$FG[245]%}'
 # ==== P_CONN = Run python script that checks internet connectivity and returns √ or X
 export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[245]%}'
 
@@ -80,11 +100,11 @@ export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[245]%}'
 # ==================================
 # ==== [LU]Left-Upper : [ user@hostname ] - [ √/X (Internet Connected) ] - [ PWD ]
 export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
-$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$txt_grey'⇜www⇝:'$txt_reset''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
+$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_TXT_GREY'⇜www⇝:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
 '⟨'$ZTM_ADLEE_P_CURDIR'⟩'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CURGIT
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
 export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'⟨'$ZTM_ADLEE_P_FREE'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_BATT'⟩'\
-$ZTM_ADLEE_P_DIV'⟨'$txt_grey'en0:'$txt_reset''$ZTM_ADLEE_P_IPADD'⟩'$ZTM_ADLEE_RP_END
+$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_TXT_GREY'en0:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_IPADD'⟩'$ZTM_ADLEE_RP_END
 # ==== [L]Lower : Date & Time - Current Command History #
 export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_SDATE'⋅'$ZTM_ADLEE_P_TIME'⟩'\
 $ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_CMDNUM'⟩'$ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
@@ -144,6 +164,16 @@ else
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 fi
 
+} # End of ZTM_ADLEE_BuildPrompt()
+
+# === PreCMD Function ===
+# =======================
+# ==== This func runs before prompt is redrawn.
+#
+precmd() {
+
+ZTM_ADLEE_BuildPrompt
+
 #If the $PROMPT_COMPACT is 'enabled' display the small prompt: single line w/ less info.
 if ! $ZTM_ADLEE_PROMPT_AUTOCOMPACT ;then
   print -rP "${ZTM_ADLEE_U_PMPT}"
@@ -152,32 +182,27 @@ else
   export PROMPT=$ZTM_ADLEE_SM_PMPT
 fi
 
+# === VIM Prompt Formatting ===
+# =============================
+function zle-line-init zle-keymap-select {
+    vim_prompt
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
+
 } # ---> End of precmd()
 
 # === Auto-update prompt for accurate time/date ===
 # =================================================
 TMOUT=1
 TRAPALRM() {
+    ZTM_ADLEE_BuildPrompt
     if [[ "$WIDGET" != "expand-or-complete" ]]; then
+        vim_prompt
         zle reset-prompt
-        # === VIM Prompt Formatting ===
- 		# =============================
- 		function zle-line-init zle-keymap-select {
-            if ! $PROMPT_COMPACT && ! $ZTM_ADLEE_PROMPT_AUTOCOMPACT ;then
-                VIM_NORMAL_PROMPT="%{$FG[245]%}◑─⟨%{$FX[bold]$FG[124]%}⌁⌘⌁%{$reset_color%}%{$FG[245]%}⟩─╯"
-     	    	VIM_INSERT_PROMPT="%{$FG[245]%}◑─⟨%{$reset_color%}%{$FG[154]$FX[bold]%}⋅✎⋅%{$reset_color%}%{$FG[245]%}⟩─╯%{$reset_color%}"
-            else
-                VIM_NORMAL_PROMPT="%{$FG[245]%}⟨%{$FX[bold]$FG[124]%}⌁⌘⌁%{$reset_color%}%{$FG[245]%}⟩"
-                VIM_INSERT_PROMPT="%{$FG[245]%}⟨%{$reset_color%}%{$FG[154]$FX[bold]%}⋅✎⋅%{$reset_color%}%{$FG[245]%}⟩%{$reset_color%}"
-            fi
-            RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT}"
-     		RPS2=$RPS1
-    		zle reset-prompt
- 		}
-
- 		zle -N zle-line-init
- 		zle -N zle-keymap-select
- 		export KEYTIMEOUT=1 
     fi
 }
 
