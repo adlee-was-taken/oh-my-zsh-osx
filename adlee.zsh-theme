@@ -55,6 +55,31 @@ plugins=(vi-mode)
 export ZTM_ADLEE_P_TXT_GREY='%{$FG[245]%}'
 export ZTM_ADLEE_P_TXT_RESET='%{$reset_color%}'
 
+# === ZTM_ADLEE_PrepPrompt Function ===
+# =====================================
+# ==== Gather system stats displayed in prompt.
+#
+ZTM_ADLEE_PrepPrompt() {
+
+# ==== P_BATT = Runs script that returns battery charge %
+export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_color$FG[245]%}'
+# ==== P_IPADD = Current 'en0' IP address
+export ZTM_ADLEE_P_IPADD='%{$FX[bold]$FG[136]%}$(~/.zsh/ipaddr.sh)%{$reset_color$FG[245]%}'
+# ==== P_CURDIR = Working DIR
+export ZTM_ADLEE_P_CURDIR='%{$FX[bold]$FG[179]%}%~%{$reset_color$FG[245]%}'
+# ==== P_CURGIT = Working DIR's Git Info
+export ZTM_ADLEE_P_CURGIT='%{$(git_prompt_info)$FG[245]%}'
+# ==== P_CMDNUM = Current command 'history' number
+export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[245]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color$FG[245]%}'
+# ==== P_PCHAR = Prompt character (%/#)
+export ZTM_ADLEE_P_PCHAR='%{$FG[245]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
+# ==== P_FREE = Amount of available RAM (in MB)
+export ZTM_ADLEE_P_RUNFREE=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
+export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$ZTM_ADLEE_P_RUNFREE$FG[245]%}MB%{$reset_color$FG[245]%}'
+# ==== P_CONN = Run python script that checks internet connectivity and returns √ or X
+export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[245]%}'
+
+}
 
 # === ZTM_ADLEE_BuildPrompt Function ===
 # =======================
@@ -78,29 +103,15 @@ export ZTM_ADLEE_P_TIME='%{$FG[069]%}%D{%I:%M:%S}%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_STIME='%{$FG[069]%}%D{%I:%M}%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_DATE='%{$FG[069]%}%D{%Y-%m-%d}%{$reset_color$FG[245]%}'
 export ZTM_ADLEE_P_SDATE='%{$FG[069]%}%D{%b}⋅%D{%d}'
-# ==== P_BATT = Runs script that returns battery charge %
-export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_color$FG[245]%}'
-# ==== P_IPADD = Current 'en0' IP address
-export ZTM_ADLEE_P_IPADD='%{$FX[bold]$FG[136]%}$(~/.zsh/ipaddr.sh)%{$reset_color$FG[245]%}'
-# ==== P_CURDIR = Working DIR
-export ZTM_ADLEE_P_CURDIR='%{$FX[bold]$FG[179]%}%~%{$reset_color$FG[245]%}'
-# ==== P_CURGIT = Working DIR's Git Info
-export ZTM_ADLEE_P_CURGIT='%{$(git_prompt_info)$FG[245]%}'
-# ==== P_CMDNUM = Current command 'history' number
-export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[245]%}!%{$reset_color%}%{$FX[bold]$FG[005]%}%h%{$reset_color$FG[245]%}'
-# ==== P_PCHAR = Prompt character (%/#)
-export ZTM_ADLEE_P_PCHAR='%{$FG[245]%}%{$FX[bold]$FG[069]%}%#%{$reset_color%} '
-# ==== P_FREE = Amount of available RAM (in MB)
-export ZTM_ADLEE_P_RUNFREE=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}')
-export ZTM_ADLEE_P_FREE='%{$FX[bold]$FG[006]$ZTM_ADLEE_P_RUNFREE$FG[245]%}MB%{$reset_color$FG[245]%}'
-# ==== P_CONN = Run python script that checks internet connectivity and returns √ or X
-export ZTM_ADLEE_P_CONN='%{$(python ~/.zsh/is_conn.py)$FG[245]%}'
+
+# ==== Run ZTM_ADLEE_PrepPrompt function to gather system stats for prompt.
+ZTM_ADLEE_PrepPrompt
 
 # === Assemble Prompt Components ===
 # ==================================
 # ==== [LU]Left-Upper : [ user@hostname ] - [ √/X (Internet Connected) ] - [ PWD ]
 export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
-$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_TXT_GREY'⇜www⇝:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
+$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_TXT_GREY'⇝www⇝:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
 '⟨'$ZTM_ADLEE_P_CURDIR'⟩'$ZTM_ADLEE_P_DIV''$ZTM_ADLEE_P_CURGIT
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
 export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'⟨'$ZTM_ADLEE_P_FREE'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_BATT'⟩'\
@@ -165,6 +176,16 @@ else
 fi
 
 } # End of ZTM_ADLEE_BuildPrompt()
+
+
+# === PreExec Function ===
+# ========================
+#
+preexec () {
+
+ZTM_ADLEE_PrepPrompt
+
+}
 
 # === PreCMD Function ===
 # =======================
