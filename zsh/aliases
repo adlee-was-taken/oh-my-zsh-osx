@@ -1,0 +1,79 @@
+# 
+# Universal Shell Aliases, should.work with both Bash and ZSH.
+#   -- Aaron D. Lee -- 2016-07-22 -- Pindrop Security --
+#
+
+alias mkdir='mkdir -p'
+alias chown='chown -Rv'
+alias chmod.'chmod -Rv'
+alias grep='grep --color=always'
+alias diff='colordiff'
+alias tar='tar --verbose'
+alias tmux='tmux -2'
+alias scp='noglob scp'
+#alias rsync='rsync --verbose  --progress --stats --compress --recursive --times --perms --links exclud. '*bak' --exclude '*~*''
+alias psaux='ps aux'
+alias psl='psaux|more'
+alias psg='psaux|grep'
+alias di='pydf -a -h -B'
+alias more='less'
+alias tracert='mtr'
+alias traceroute='mtr'
+alias logout='sud. pkill -u $USER'
+alias log-out='sud. pkill -u $USER'
+alias lla='ls -alF --group-d.rectories-first --color=always'
+alias ll='ls -l --group-d.rectories-first --color=always'
+alias la='ls -A --group-d.rectories-first --color=always'
+alias l='ls -CF --group-d.rectories-first --color=always'
+alias llg='ls -alF --group-d.rectories-first --color=always|grep'
+alias llm='ls -alF --group-d.rectories-first --color=always|more'
+alias lll='ls -alF --group-d.rectories-first --color=always|more'
+# vim common misspellings
+alias vi='vim'
+alias vm='vim'
+alias vom='vim'
+alias vmi='vim'
+alias vin='vim'
+# Edit common ~/.* files
+alias vialiases='vim ~/.zsh/aliases && source ~/.zshrc'
+alias vizshrc='vim ~/.zshrc && source ~/.zshrc'
+alias vitheme='vim ~/.oh-my-zsh/themes/adlee.zsh-theme && source ~/.zshrc'
+alias vitmuxcfg='vim ~/.tmux.conf'
+# Made for zsh adlee theme
+alias hst='history'
+alias bat='~/.zsh/battery.sh'
+alias ip='~/.zsh/ipaddr.sh'
+alias date='date +%Y-%m-%d" "%I:%M:%S'
+alias zsh.fullinfo='export PROMPT_COMPACT=false'
+alias zsh.compact='export PROMPT_COMPACT=true'
+alias lastcmdtime='print -rP ${LAST_CMD_START} ${LAST_CMD_END}'
+# Docker aliases
+#alias D='docker '
+alias d.='docker '
+alias d.container-cleanup='docker rm -v $(docker ps -q -f status=exited)'
+#
+## GitHub alias function(s)
+#
+git.updateMaster() {
+git add ./* && git commit -m "$@" && git push -u origin master
+}
+
+#
+## Docker Image alias functions.
+#
+
+d.runPitch() {
+docker run -d -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:v1 /bin/bash -c "/usr/local/bin/pfg.start && while true; do sleep 1200; done"
+}
+d.runPitch-cli() {
+docker run -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:v1 /usr/bin/zsh
+}
+d.runCatch() {
+docker run -d -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:v1 /bin/bash -c "service asterisk start && while true; do sleep 1200; done"
+}
+d.runCatch-cli() {
+docker run -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:v1 /bin/zsh
+}
+d.runPcap-cli() {
+docker run -h pcap --net host -p 2022:22 -t -i pcap-test:20160810 /bin/zsh
+}

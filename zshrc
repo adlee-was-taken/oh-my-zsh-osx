@@ -63,7 +63,7 @@ export LANG=en_US.UTF-8
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git docker tmux vi-mode )
+plugins=( git docker tmux vi-mode zsh-syntax-highlighting)
 
 # User configuration
 
@@ -117,6 +117,7 @@ bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
+bindkey '^[[3~' delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
@@ -136,4 +137,8 @@ bindkey "^[[34;3@" up-case-word
 bindkey "^[[35;4@" undo
 bindkey "^[[35;5@" redo
 bindkey "^[[33;2&" backward-kill-word
-bindkey -M vicmd '^[[2~' edit-command-line
+bindkey -rM vicmd '^[[2~'
+bindkey -sM vicmd '^[' '^G'
+bindkey -sM viins '^[[2~' '^X' 
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
