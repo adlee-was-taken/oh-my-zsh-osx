@@ -16,12 +16,13 @@ fi
 # ==== RP_[...] = Right Prompt
 # ==== P_[...] = Both Prompts
 #
-ZTM_ADLEE_P_START='%{$FG[239]%}◑┬%{$reset_color$FG[239]%}'
-ZTM_ADLEE_UP_START='%{$FG[239]%} ╰%{$reset_color$FG[239]%}'
-ZTM_ADLEE_RP_START='%{$FG[239]%}─%{$reset_color$FG[239]%}'
-ZTM_ADLEE_RP_END='%{$FG[239]%}─┬◐%{$reset_color$FG[239]%}'
-ZTM_ADLEE_LP_END='%{$FG[239]%}─◐%{$reset_color$FG[239]%}'
-ZTM_ADLEE_P_DIV='%{$FG[239]%}─%{$reset_color$FG[239]%}'
+ZTM_ADLEE_P_START='%{$FG[239]%}∘%{$reset_color$FG[239]%}'
+ZTM_ADLEE_LP_START='%{$FG[239]%} ╰%{$reset_color$FG[239]%}'
+ZTM_ADLEE_UP_START='%{$FG[239]%}∘%{$reset_color$FG[239]%}'
+ZTM_ADLEE_RP_START='%{$FG[239]%}∘%{$reset_color$FG[239]%}'
+ZTM_ADLEE_RP_END='%{$FG[239]%}∘%{$reset_color$FG[239]%}'
+ZTM_ADLEE_LP_END='%{$FG[239]%}∘%{$reset_color$FG[239]%}'
+ZTM_ADLEE_P_DIV='%{$FG[239]%}×%{$reset_color$FG[239]%}'
 ZTM_ADLEE_TXT_GRY='%{$FG[245]%}'
 ZTM_ADLEE_TXT_DGRY='%{$FG[239]%}'
 ZTM_ADLEE_TXT_RST='%{$reset_color$FG[239]%}'
@@ -39,8 +40,8 @@ add-zsh-hook precmd adlee_precmd
 # =============================
 function vim_prompt () {
 if ! $PROMPT_COMPACT;then
-	VIM_NORMAL_PROMPT="%{$FG[239]%}◑─⟨⋅%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⋅⟩─╯"
-    VIM_INSERT_PROMPT="%{$FG[239]%}◑─⟨⋅%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⋅⟩─╯%{$reset_color%}"
+	VIM_NORMAL_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨⋅%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⋅⟩╯"
+    VIM_INSERT_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨⋅%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⋅⟩╯%{$reset_color%}"
 else
     VIM_NORMAL_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
     VIM_INSERT_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
@@ -119,15 +120,14 @@ ZTM_ADLEE_PrepPrompt
 # === Assemble Prompt Components ===
 # ==================================
 # ==== [LU]Left-Upper : [ user@hostname ] - [ √/X (Internet Connected) ] - [ PWD ]
-export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
-$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_TXT_GRY'⇝www⇝:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
-'⟨'$ZTM_ADLEE_P_CURDIR''$ZTM_ADLEE_P_CURGIT'⟩'$ZTM_ADLEE_P_DIV
+export ZTM_ADLEE_LU_PMPT=$ZTM_ADLEE_P_START'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN\
+$ZTM_ADLEE_P_HOST'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_TXT_GRY'⚡www:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_CONN'⟩'$ZTM_ADLEE_P_DIV\
+'⟨'$ZTM_ADLEE_P_CURDIR''$ZTM_ADLEE_P_CURGIT'⟩'$ZTM_ADLEE_LP_END
 # ==== [RU]Right-Upper : [ Free RAM in MB ] - [ Batt. Charge % ] - [ en0:<IP> ]
 export ZTM_ADLEE_RU_PMPT=$ZTM_ADLEE_RP_START'⟨'$ZTM_ADLEE_P_FREE'⟩'$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_BATT'⟩'\
 $ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_TXT_GRY'en0:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_P_IPADD'⟩'$ZTM_ADLEE_RP_END
 # ==== [L]Lower : Date & Time - Current Command History #
-export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_UP_START''$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_SDATE'⋅'$ZTM_ADLEE_P_TIME'⟩'\
-$ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_P_CMDNUM'⟩'$ZTM_ADLEE_LP_END' '$ZTM_ADLEE_P_PCHAR
+export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_LP_START'⟨'$ZTM_ADLEE_P_DATE'⋅'$ZTM_ADLEE_P_TIME'⟩'$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_PCHAR
 # ==== [SM]Small (Compact) : User - PWD
 export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN''$ZTM_ADLEE_P_HOST'⟩×⟨'\
 $ZTM_ADLEE_P_CURDIR''$ZTM_ADLEE_P_CURGIT'⟩'$ZTM_ADLEE_P_COMPACT_END''$ZTM_ADLEE_P_PCHAR
@@ -154,7 +154,7 @@ local user_width;user_width=$(whoami | tr -d " \t\n\r" | wc -m)
 local mem_width;mem_width=$(python ~/.zsh/free.py | tail -2 | head -1 | awk '{print $3}'| tr -d " \t\n\r" | wc -m)
 
 #Account for other (design) characters
-local desch;desch=38
+local desch;desch=33
 local ldesch;ldesch=23
 
 #Set $prompt_comp to global $PROMPT_COMPACT
@@ -164,8 +164,8 @@ export ZTM_ADLEE_PROMPT_AUTOCOMPACT=$PROMPT_COMPACT
 local i_filler;i_filler=$(( $COLUMNS-$desch-$host_width-$pwd_width-$git_width-$batt_width-$ip_width-$user_width-$mem_width ))
 local j_filler;j_filler=$(( $COLUMNS-$ldesch-$host_width-$pwd_width-$git_width-$user_width ))
 #Export 'P_FILL' variable with proper number of filler chars.
-local p_fill;p_fill="%{$FG[239]%}${(l:${i_filler}::─:)}${reset_color}"
-local p_left_fill;p_left_fill="%{$FG[239]%}${(l:${j_filler}::─:)}${reset_color}"
+local p_fill;p_fill="%{$FG[239]%}${(l:${i_filler}:: :)}${reset_color}"
+local p_left_fill;p_left_fill="%{$FG[239]%}${(l:${j_filler}:: :)}${reset_color}"
 
 # === Check Console Width and Adjust Prompt Accordingly ===
 # =========================================================
@@ -180,7 +180,7 @@ elif [[ $COLUMNS -lt $(( $host_width + $pwd_width + $git_width + $user_width + (
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 #Otherwise just show upper-left and lower-left prompts.
 else
-  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT''$ZTM_ADLEE_P_DIV''$p_left_fill''$ZTM_ADLEE_RP_END
+  export ZTM_ADLEE_U_PMPT=$ZTM_ADLEE_LU_PMPT
   export ZTM_ADLEE_M_PMPT=$ZTM_ADLEE_L_PMPT
 fi
 
@@ -190,10 +190,9 @@ fi
 # === PreExec Function ===
 # ========================
 #
-export cmd_start_time=$SECONDS
 function adlee_preexec () {
   ZTM_ADLEE_PrepPrompt
-  export cmd_start_time=$SECONDS
+  cmd_start_time=$SECONDS
 }
 
 # === Calculate Elapsed Time Function ===
@@ -205,13 +204,13 @@ function calc_elapsed_time {
     let "remainder = $timer_result % 3600"
     let "timer_minutes = $remainder / 60"
     let "timer_seconds = $remainder % 60"
-    print -P "%B%F{red} >>> execution completed after ${timer_hours}h${timer_minutes}m${timer_seconds}s at %D{%Y-%m-%d %I:%M:%S}%b"
+    print -P "%{$FG[124]%} >>> completed in: %b%B%{$FG[196]%}${timer_hours}h${timer_minutes}m${timer_seconds}s%b%{$FG[124]%} at: %b%B%{$FG[196]%}%D{%Y-%m-%d %I:%M:%S}%b"
   elif [[ $timer_result -ge 60 ]]; then
     let "timer_minutes = $timer_result / 60"
     let "timer_seconds = $timer_result % 60"
-    print -P "%F{yellow} >>> execution completed after ${timer_minutes}m${timer_seconds}s at %D{%Y-%m-%d %I:%M:%S}%b"
+    print -P "%{$FG[220]%} >>> completed in: %b%B%{$FG[228]%}${timer_minutes}m${timer_seconds}s%b%{$FG[220]%} at: %b%B%{$FG[228]%}%D{%Y-%m-%d %I:%M:%S}%b"
   elif [[ $timer_result -gt 10 ]]; then
-    print -P "%{$FG[154]%} >>> execution completed after ${timer_result}s at %D{%Y-%m-%d %I:%M:%S}%{$reset_color%}"
+    print -P "%{$FG[002]%} >>> completed in: %b%B%{$FG[010]%}${timer_result}s%b%{$FG[112]%} at: %b%B%{$FG[002]%}%D{%Y-%m-%d %I:%M:%S}%b"
   fi
 }
 
@@ -223,18 +222,29 @@ function adlee_precmd() {
 
   ZTM_ADLEE_BuildPrompt
 
-#If the $PROMPT_COMPACT is 'enabled' display the small prompt: single line w/ less info.
+# CMD Execution timer stuff:
+  if ! [[ -z $cmd_start_time ]];then
+  timer_result=$(($SECONDS-$cmd_start_time))
+  if [[ $timer_result -gt 10 ]];then
+     calc_elapsed_time
+  fi
+  fi
+unset cmd_start_time
+
+# If the $PROMPT_COMPACT is 'enabled' display the small prompt: single line w/ less info.
   if ! $ZTM_ADLEE_PROMPT_AUTOCOMPACT ;then
     print -rP "${ZTM_ADLEE_U_PMPT}"
     export PROMPT=$ZTM_ADLEE_M_PMPT
   else
     export PROMPT=$ZTM_ADLEE_SM_PMPT
   fi
-  timer_result=$(($SECONDS-$cmd_start_time))
-  if [[ $timer_result -gt 10 ]];then
-    calc_elapsed_time
-  fi
-  export cmd_start_time=$SECONDS
+
+## CMD Execution timer stuff:
+#  timer_result=$(($SECONDS-$cmd_start_time))
+#  if [[ $timer_result -gt 10 ]];then
+#    calc_elapsed_time
+#  fi
+#  export cmd_start_time=$SECONDS
 
 # === VIM Prompt Formatting ===
 # =============================
@@ -262,7 +272,7 @@ TRAPALRM() {
 
 # === Git Prompt Formatting ===
 # =============================
-ZSH_THEME_GIT_PROMPT_PREFIX="·%{$fg_bold[green]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="⟩×⟨%{$fg_bold[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color$FG[239]%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
