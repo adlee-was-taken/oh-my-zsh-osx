@@ -43,8 +43,8 @@ if ! $PROMPT_COMPACT;then
 	VIM_NORMAL_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨⋅%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⋅⟩╯"
     VIM_INSERT_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨⋅%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⋅⟩╯%{$reset_color%}"
 else
-    VIM_NORMAL_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
-    VIM_INSERT_PROMPT="%{$FG[239]%}∘⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
+    VIM_NORMAL_PROMPT="%{$FG[239]%}⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$FX[bold]$FG[124]%}⚡⌘⚡%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
+    VIM_INSERT_PROMPT="%{$FG[239]%}⟨"$ZTM_ADLEE_P_CMDNUM"⟩×⟨%{$reset_color%}%{$FG[154]$FX[bold]%}«_»%{$reset_color%}%{$FG[239]%}⟩∘%{$reset_color%}"
 fi
 RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT}"
 RPS2=$RPS1
@@ -77,10 +77,17 @@ export ZTM_ADLEE_P_BATT='%{$FX[bold]$FG[160]%}$(~/.zsh/battery.sh)%%%{$reset_col
 export ZTM_ADLEE_P_IPADD='%{$FX[bold]$FG[136]%}$(~/.zsh/ipaddr.sh)%{$reset_color$FG[239]%}'
 # ==== P_CURDIR = Working DIR
 export ZTM_ADLEE_P_CURDIR='%{$FG[179]%}%~%{$reset_color$FG[239]%}'
+local curdir_len;curdir_len=$(pwd | sed -e 's/\/Users\/alee/~/g' | wc -m)
+if [ $curdir_len -gt 40 ]; then
+    spwd_output=$(pwd | awk -F '/' '{print $(NF - 1)"/"$NF}')
+    export ZTM_ADLEE_P_SCURDIR='%{$FG[034]%}«%{$FG[226]%}«%{$reset_color$FG[239]%}%{$FG[179]%}/${spwd_output}%{$reset_color$FG[239]%}'
+else
+    export ZTM_ADLEE_P_SCURDIR=$ZTM_ADLEE_P_CURDIR
+fi    
 # ==== P_CURGIT = Working DIR's Git Info
 export ZTM_ADLEE_P_CURGIT='$(git_prompt_info)%{$FG[239]%}'
 # ==== P_CMDNUM = Current command 'history' number
-export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[239]%}!%{$reset_color%}%{$FG[179]%}%h%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_CMDNUM='%{$FX[bold]$FG[239]%}!%{$reset_color%}%{$FG[129]%}%h%{$reset_color$FG[239]%}'
 # ==== P_PCHAR = Prompt character (%/#)
 export ZTM_ADLEE_P_PCHAR='%{$FG[239]%}%{$FX[bold]$FG[069]%} %#%{$reset_color%} '
 # ==== P_FREE = Amount of available RAM (in MB)
@@ -102,9 +109,9 @@ ZTM_ADLEE_BuildPrompt() {
 # ==== P_USER = Current System User
 # ==== P_ATSIGN = '@' -- for between USER'@'HOST
 # ==== P_HOST = System Hostname
-export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[129]%}%n%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_USER='%{$FX[bold]$FG[154]%}%n%{$reset_color$FG[239]%}'
 export ZTM_ADLEE_P_ATSIGN='%{$FX[bold]$FG[103]%}@%{$reset_color$FG[239]%}'
-export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[154]%}%m%{$reset_color$FG[239]%}'
+export ZTM_ADLEE_P_HOST='%{$FX[bold]$FG[129]%}%m%{$reset_color$FG[239]%}'
 # ==== P_TIME = Current time (24hr)
 # ==== P_STIME = Current time (without seconds)
 # ==== P_DATE = Current date: YYYY-MM-DD
@@ -130,7 +137,7 @@ $ZTM_ADLEE_P_DIV'⟨'$ZTM_ADLEE_TXT_GRY'en0:'$ZTM_ADLEE_P_TXT_RESET''$ZTM_ADLEE_
 export ZTM_ADLEE_L_PMPT=$ZTM_ADLEE_LP_START'⟨'$ZTM_ADLEE_P_DATE'⋅'$ZTM_ADLEE_P_TIME'⟩'$ZTM_ADLEE_P_START''$ZTM_ADLEE_P_PCHAR
 # ==== [SM]Small (Compact) : User - PWD
 export ZTM_ADLEE_SM_PMPT=$ZTM_ADLEE_P_COMPACT_START'⟨'$ZTM_ADLEE_P_USER''$ZTM_ADLEE_P_ATSIGN''$ZTM_ADLEE_P_HOST'⟩×⟨'\
-$ZTM_ADLEE_P_CURDIR''$ZTM_ADLEE_P_CURGIT'⟩'$ZTM_ADLEE_P_COMPACT_END''$ZTM_ADLEE_P_PCHAR
+$ZTM_ADLEE_P_SCURDIR''$ZTM_ADLEE_P_CURGIT'⟩'$ZTM_ADLEE_P_PCHAR
 
 # === Calculate and Create Filler for Full-Width Prompt (top-line) ===
 # ====================================================================
@@ -239,13 +246,6 @@ unset cmd_start_time
     export PROMPT=$ZTM_ADLEE_SM_PMPT
   fi
 
-## CMD Execution timer stuff:
-#  timer_result=$(($SECONDS-$cmd_start_time))
-#  if [[ $timer_result -gt 10 ]];then
-#    calc_elapsed_time
-#  fi
-#  export cmd_start_time=$SECONDS
-
 # === VIM Prompt Formatting ===
 # =============================
   function zle-line-init zle-keymap-select {
@@ -261,7 +261,9 @@ unset cmd_start_time
 
 # === Auto-update prompt for accurate time/date ===
 # =================================================
-TMOUT=1
+if ! $PROMPT_COMPACT;then
+    TMOUT=1
+fi
 TRAPALRM() {
     ZTM_ADLEE_BuildPrompt
     if [[ "$WIDGET" != "expand-or-complete" ]]; then

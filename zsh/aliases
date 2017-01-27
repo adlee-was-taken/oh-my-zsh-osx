@@ -2,14 +2,14 @@
 # Universal Shell Aliases, should.work with both Bash and ZSH.
 #   -- Aaron D. Lee -- 2016-07-22 -- Pindrop Security --
 #
-
+alias xs='cd'
 alias mkdir='mkdir -p'
 alias chown='chown -Rv'
 alias chmod.'chmod -Rv'
 alias grep='grep --color=always'
 alias diff='colordiff'
 alias tar='tar --verbose'
-alias tmux='tmux -2'
+alias tmux='tmux attach || tmux -2'
 alias scp='noglob scp'
 #alias rsync='rsync --verbose  --progress --stats --compress --recursive --times --perms --links exclud. '*bak' --exclude '*~*''
 alias psaux='ps aux'
@@ -48,8 +48,8 @@ alias zsh.fullinfo='export PROMPT_COMPACT=false'
 alias zsh.compact='export PROMPT_COMPACT=true'
 alias lastcmdtime='print -rP ${LAST_CMD_START} ${LAST_CMD_END}'
 # Docker aliases
-#alias D='docker '
-alias d.='docker '
+alias D='docker '
+#alias d.='docker '
 alias d.container-cleanup='docker rm -v $(docker ps -q -f status=exited)'
 #
 ## GitHub alias function(s)
@@ -62,18 +62,18 @@ git add ./* && git commit -m "$@" && git push -u origin master
 ## Docker Image alias functions.
 #
 
-d.runPitch() {
-docker run -d -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:v1 /bin/bash -c "/usr/local/bin/pfg.start && while true; do sleep 1200; done"
+DrunPitch() {
+docker run -d -h pitcher --net ptg-bridge --ip 192.168.3.102 -p 80:8080 -v ~/.ptg-spool:/var/spool/ptg -t -i ptg-pitcher:v1 /bin/bash -c "/usr/local/bin/ptg.start && while true; do sleep 1200; done"
 }
-d.runPitch-cli() {
-docker run -h pitcher --net pfg-bridge --ip 192.168.3.102 -p 8080:8080 -t -i pfg-pitcher:v1 /usr/bin/zsh
+DrunPitch-cli() {
+docker run -h pitcher --net ptg-bridge --ip 192.168.3.102 -p 80:8080 -v ~/.ptg-spool:/var/spool/ptg -t -i ptg-pitcher:v1 /bin/bash
 }
-d.runCatch() {
-docker run -d -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:v1 /bin/bash -c "service asterisk start && while true; do sleep 1200; done"
+DrunCatch() {
+docker run -d -h catcher --net ptg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i ptg-catcher:v1 /bin/bash -c "service asterisk start && while true; do sleep 1200; done"
 }
-d.runCatch-cli() {
-docker run -h catcher --net pfg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i pfg-catcher:v1 /bin/zsh
+DrunCatch-cli() {
+docker run -h catcher --net ptg-bridge --ip 192.168.3.101 -p 5060:5060 -t -i ptg-catcher:v1 /bin/bash
 }
-d.runPcap-cli() {
+DrunPcap-cli() {
 docker run -h pcap --net host -p 2022:22 -t -i pcap-test:20160810 /bin/zsh
 }
